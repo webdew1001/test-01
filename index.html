@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>즐거운</title>
+
+  
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        window.onload = () => {
+            var swiper = new Swiper(".section02-Swiper", {
+                slidesPerView: "3.4",
+                spaceBetween: 30,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+            });
+
+            var swiper = new Swiper(".section04-Swiper", {
+                slidesPerView: "6.3",
+                spaceBetween: 20,
+                loop: true,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                speed: 3000,
+                autoplay: {
+                    delay: 0,  // 3초마다 슬라이드 전환
+                    disableOnInteraction: false,  // 사용자 조작 후에도 자동 재생 유지
+                },
+                
+
+            });
+
+            let header = document.querySelector('.header');
+            let headerLogo = header.querySelector('.logo img');
+
+            let mainSection = document.querySelector('.section-01');
+
+            let gifSection = document.querySelector('.section-03'); 
+            let gifImage = gifSection.querySelector('.image img');
+
+            let footer = document.querySelector('.footer');
+            let familySiteBtn = footer.querySelector('.family_site button')
+            let familySiteList = footer.querySelector('.family_site .list');
+
+            let isReload = false; //false값을 변수로 설정, 실행하지 않음, 조건이 맞지 않음.
+            let index = 100;
+
+            familySiteBtn.addEventListener('click', () => {
+                familySiteList.classList.toggle('active');
+            });
+            let topBtn = document.querySelector('.top_btn');
+          
+            //offsetTop => 문서에서 떨어진 값(document, 스크롤해도 위치 변화 없음)
+            //getBoundingClientRect().top  [겟 바운딩 클라이언트 렉트] => 현재 화면 viewport에서 떨어진 값, 스크롤에 따라 값 변화
+            
+              
+               
+            let gifSectionTop = gifSection.offsetTop;
+            let gifsectionBottom = gifSectionTop + gifSection.offsetHeight; //section의 하단 위치값 구하기기
+            let footerTop = footer.offsetTop;
+            
+            let windowHeight = window.innerHeight; //현재 보이는 영역의 높이
+            let mainSectionTop = mainSection.offsetTop; //상단에서 떨어진 값
+            window.addEventListener('scroll', () => {
+                let scrollTop = window.scrollY;
+
+
+               
+ 
+
+                if(scrollTop > 0) {
+                    headerLogo.src = 'img/logo.svg'
+                    header.classList.add('active');
+                } else {
+                    headerLogo.src = 'img/logo_wh.svg';
+                    header.classList.remove('active');
+
+                }
+
+                console.log(mainSectionTop)
+                if(scrollTop >= mainSectionTop) {
+                    topBtn.style.opacity = 1;
+                } else {
+                    topBtn.style.opacity = 0;
+                }
+
+                //console.log(!isReload)
+
+                
+                if(scrollTop > gifSectionTop && scrollTop < gifsectionBottom) {
+                    //!isReload 변수앞에 !이 있으면 기존값을 반대값으로 적용해줌 false -> ture
+                    //즉 해당 조건이 맞으니깐깐 ture, 실행하겠음. 
+                    if(!isReload) {
+                        setTimeout(() => {
+                            gifImage.src = 'img/graph.gif';
+                        }, 0)
+                        gifImage.style.opacity = "1"; // 이미지 보이기 
+                        isReload = true; // 다시 실행되지 않도록 설정, 없으면 스크롤할때마다 실행행
+                    }
+                } else {
+                    gifImage.style.opacity = "0"; // 이미지 숨기기
+                    isReload = false; // 다시 section에 들어오면 실행 가능하도록 초기화
+                }
+                
+
+
+                console.log('문서의 전체 페이지 높이값:' + document.documentElement.scrollHeight)
+                console.log('스크롤바의Y값:' + scrollTop)
+                console.log('문서 맨 아래가지의 위치값' + scrollTop + windowHeight); // 맨 아래 위치값 찾기기
+                console.log('푸터상단에서 떨어진 값 : ' + footerTop)
+                if(scrollTop + windowHeight >= footerTop) {
+                    topBtn.classList.add('active');
+
+                } else {
+                    topBtn.classList.remove('active');
+                }
+
+            });//scroll()
+ 
+
+
+        };//script end
+    </script>
+</head>
+<body>
+    <div id="wrap">
+        <header class="header">
+            <div class="inner">
+                <h1 class="logo">
+                    <img src="img/logo_wh.svg" alt="즐거운">
+                </h1>
+                <nav class="nav">
+                    <ul class="gnb">
+                        <li><a href="#">소개</a></li>
+                        <li><a href="#">사업•서비스</a></li>
+                        <li><a href="#">뉴스룸</a></li>
+                        <li><a href="#">인재채용</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main">
+            <section class="main_visual">
+                <video autoplay loop muted>
+                    <source src="img/main-visual.mp4">
+                </video>
+
+                <div class="text">
+                    <h2>일상의 즐거운 순간들을<br />당신과 함께 만들어 갑니다</h2>
+                </div><!-- text -->
+
+                <div class="cont_news">
+                    <div class="inner">
+                        <div>
+                            <p>[공지] 전자금융업약관 제정 안내</p>
+                            <span>2025.03.18</span>
+                        </div>
+                        <span class="page_next">
+                            <svg width="17" height="31" viewBox="0 0 17 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="21.4286" height="1.42857" transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 16.5914 15.1523)" fill="white"></rect>
+                                <rect width="21.4286" height="1.42857" transform="matrix(-0.707107 0.707107 0.707107 0.707107 15.581 14.1406)" fill="white"></rect>
+                            </svg>
+                        </span><!-- .page_next  -->
+                    </div>
+                </div><!-- cont_news end -->
+
+            </section><!-- .main_visual -->
+
+            
+
+            <section class="section section-01">
+                <div class="inner">
+                    <div class="title flex">
+                        <h3>모바일 쿠폰 전문 기업 1위</h3>
+                        <p>모바일 쿠폰 전문 기업 1위인 즐거운은<br />
+                            2011년 이래 모바일 쿠폰 사업 경험과 기술력을 바탕으로<br />
+                            모바일 쿠폰 사업을 선도하고 있습니다.</p>
+                    </div><!-- .title end -->
+
+                    <div class="image">
+                        <img src="img/main1_img1.webp" alt="모바일 쿠폰 전문 기업 1위" />
+                    </div>
+                </div><!-- .inner end -->
+            </section><!-- .section-01 end -->
+
+            <section class="section section-02">
+
+                <div class="section-02_inner">
+                    <div class="swiper section02-Swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide title">
+                                <h3>모바일 쿠폰<br />
+                                    발행/유통 플랫폼에서<br />
+                                    서비스 플랫폼으로</h3>
+                                <p>모바일 쿠폰 발행/유통, 복지 및 마케팅용 쿠폰 대량 발송, <br />
+                                    쿠폰몰 구축 등으로 다져진 사업 역량이 자사 쿠폰몰, <br />
+                                    통합 모바일 쿠폰, 빅데이터 기반 쿠폰 마케팅 플랫폼 등으로 <br />
+                                    발전하고 있습니다.</p>
+                            </div><!-- swiper-slide -->
+                            <div class="swiper-slide">
+                                <div class="image">
+                                    <img src="img/main_2_card_img1.webp" alt="모바일 쿠폰 통합 플랫폼">
+                                </div>
+                    
+                                <p class="slide-default-text">모바일 쿠폰 통합 플랫폼</p>
+                                <div class="slide-hover-text">
+                                    <p>
+                                        브랜드사의 상품, 판매처, 가맹점, 고객의 <br>
+                                        정보를 안전하게 데이터 처리하여 <br>
+                                        쿠폰 발급부터 사용 후 정산까지 <br>
+                                        전문적으로 처리하는 <br>
+                                        모바일 쿠폰 통합 플랫폼을 제공합니다.
+                                    </p>
+                                </div><!-- slide-hover-text -->
+                            </div> <!-- swiper-slide / 1-->
+                            <div class="swiper-slide">
+                                <div class="image"><img src="img/main_2_card_img2.webp" alt="모바일 쿠폰 유통/판매"></div>
+                    
+                                <p class="slide-default-text">모바일 쿠폰 유통/판매</p>
+                                <div class="slide-hover-text">
+                                    <p>
+                                        판매 매출 극대화, 이벤트 활성화, 브랜딩 등 <br>
+                                        다양한 브랜드사의 쿠폰 판매 목적과&nbsp; <br>
+                                        카카오톡, 소셜커머스, 복지몰 등 <br>
+                                        판매 채널별 특성 및 니즈를 고려하여 <br>
+                                        최적의 쿠폰 유통 전략을 제공합니다.
+                                    </p>
+                                </div>
+                            </div> <!-- swiper-slide / 2-->
+                            <div class="swiper-slide">
+                                <div class="image"><img src="img/main_2_card_img3.webp" alt="복지 및 마케팅용 쿠폰 서비스"></div>
+                    
+                                <p class="slide-default-text">복지 및 마케팅용 쿠폰 서비스</p>
+                                <div class="slide-hover-text">
+                                    <p>
+                                        사내 복지 및 다양한 마케팅 목적에 따라<br>
+                                        최적의 쿠폰 유형, 이벤트, CS 응대,&nbsp;<br>
+                                        발송 시스템과 노하우를 지원함으로써<br>
+                                        금융사, 제조사 등 연간 400억 이상의<br>
+                                        B2B 거래 실적을 보유하고 있습니다.
+                                    </p>
+                                </div>
+                            </div> <!-- swiper-slide / 3-->
+                            <div class="swiper-slide">
+                                <div class="image"><img src="img/main_2_card_img4.webp" alt="쿠폰몰 구축/운영"></div>
+                    
+                                <p class="slide-default-text">쿠폰몰 구축/운영</p>
+                                <div class="slide-hover-text">
+                                    <p>
+                                        기업의 폐쇄몰, 금융사 포인트몰,<br>
+                                        영업지원 솔루션 등 다양한 고객사의<br>
+                                        니즈에 맞게 컨설팅, 상품 공급, <br>
+                                        서비스 구축, 마케팅 및 운영까지<br>
+                                        One stop으로 제공합니다.
+                                    </p>
+                                </div>
+                            </div> <!-- swiper-slide / 4-->
+                            <div class="swiper-slide">
+                                <div class="image"><img src="img/main_2_card_img5.webp" alt="자사 쿠폰몰 서비스(B2B, B2C)"></div>
+                    
+                                <p class="slide-default-text">자사 쿠폰몰 서비스(B2B, B2C)</p>
+                                <div class="slide-hover-text">
+                                    <p>
+                                        기업 대상 모바일 쿠폰 발송 서비스<br>
+                                        오피스콘과(B2B) 쿠폰 브랜드 스토어 기반<br>
+                                        SNS 일상카페(B2C)를 통해<br>
+                                        다양한 서비스를 제공합니다.<br>
+                                    </p>
+                                </div>
+                            </div> <!-- swiper-slide / 5-->
+                            <div class="swiper-slide">
+                                <div class="image"><img src="img/main_2_card_img6.webp" alt="통합 모바일 쿠폰 서비스"></div>
+                    
+                                <p class="slide-default-text">통합 모바일 쿠폰 서비스</p>
+                                <div class="slide-hover-text">
+                                    <p>
+                                        특정 단일 매장에서만 사용 가능한<br>
+                                        기존 모바일 쿠폰의 단점을 개선하여<br>
+                                        다양한 브랜드의 여러 매장에서<br>
+                                        사용 가능한 쿠폰으로 고객의 선택권과<br>
+                                        사용성을 높였습니다.<br>
+                                    </p>
+                                </div>
+                            </div> <!-- swiper-slide / 6-->
+                            <div class="swiper-slide last-item">
+                                <span>슬라이드 마지막 페이지로 빈 페이지입니다.</span>
+                            </div> <!-- swiper-slide / 6-->
+                    
+                        </div><!-- swiper-wrapper -->
+                        
+                    </div>
+                </div>
+                <div class="swiper-button_wrap">
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                 </div>
+            </section><!-- .section-02 end -->
+
+            <section class="section section-03">
+                <div class="inner">
+                    <div class="text_wrap">
+                        <div class="title">
+                            <h3>성장하는 기업과 함께 하세요!</h3>
+                            <p>즐거운은 매해 업계 최고 성장률의 역사를 써 내려 갑니다.<br />
+                                성장의 이유가 무엇인지 확실히 보여 드립니다.</p>
+                        </div><!-- title -->
+                        <div class="cont_text">
+                            <div>
+                                <p>모바일 쿠폰 전문 기업</p>
+                                <span><b>1위</b></span>
+                            </div>
+                            <div>
+                                <p>자산 합계 (2023년 기준)</p>
+                                <span><b data-target="1,163">1,163억+</b></span>
+                            </div>
+                            <div>
+                                <p>연 성장률 (2023년 기준)</p>
+                                <span><b>140%</b></span>
+                            </div>
+                        </div><!-- .cont_text end -->
+                    </div><!-- .text_wrap end -->
+
+                    <div class="image" data-aos="zoom-in">
+                        <img src="img/graph.gif" alt="총자산 증가율(2023.12 기준)">
+                    </div><!-- .image end -->
+
+                </div><!-- .inner end -->
+            </section><!-- section-03 -->
+
+            <section class="section section-04">
+                <div class="title inner flex">
+                    <h3>즐거운과 함께하는<br />
+                        모바일 쿠폰 주요 브랜드사</h3>
+                    <p>브랜드사는 카카오톡, 오픈마켓, 소셜 커머스 등을 통해<br />
+                        매출 증대, 브랜딩, 마케팅 등이 가능하며<br />
+                        고객에게 맞춤형 브랜드 선택 폭을 넓혀드립니다.</p>
+                </div><!-- .title end -->
+
+                <div class="swiper section04-Swiper">
+                    <div class="swiper-wrapper">
+                        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img1.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>투썸플레이스</p>
+                                <span>
+                                    <img src="img/main_3_card_logo1.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image text-white">
+                                <img src="img/main_3_card_img2.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>배달의민족</p>
+                                <span>
+                                    <img src="img/main_3_card_logo2.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img3.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>이디야커피</p>
+                                <span>
+                                    <img src="img/main_3_card_logo3.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img4.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>CGV</p>
+                                <span>
+                                    <img src="img/main_3_card_logo4.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img5.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>뚜레쥬르</p>
+                                <span>
+                                    <img src="img/main_3_card_logo5.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img6.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>스타벅스</p>
+                                <span>
+                                    <img src="img/main_3_card_logo6.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img7.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>빽다방</p>
+                                <span>
+                                    <img src="img/main_3_card_logo7.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img8.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>베스킨라빈스</p>
+                                <span>
+                                    <img src="img/main_3_card_logo8.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img9.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>이마트</p>
+                                <span>
+                                    <img src="img/main_3_card_logo9.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img10.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>빕스</p>
+                                <span>
+                                    <img src="img/main_3_card_logo10.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img11.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>GS25</p>
+                                <span>
+                                    <img src="img/main_3_card_logo11.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img12.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>CU</p>
+                                <span>
+                                    <img src="img/main_3_card_logo12.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img13.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>파리바게뜨</p>
+                                <span>
+                                    <img src="img/main_3_card_logo13.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img14.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>버거킹</p>
+                                <span>
+                                    <img src="img/main_3_card_logo14.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img15.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>메가박스</p>
+                                <span>
+                                    <img src="img/main_3_card_logo15.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img16.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>올리브영</p>
+                                <span>
+                                    <img src="img/main_3_card_logo16.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img17.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>네이버페이</p>
+                                <span>
+                                    <img src="img/main_3_card_logo17.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img18.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>쿠팡이츠</p>
+                                <span>
+                                    <img src="img/main_3_card_logo18.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img19.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>롯데리아</p>
+                                <span>
+                                    <img src="img/main_3_card_logo19.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+        
+                        <div class="swiper-slide">
+                            <div class="card-image">
+                                <img src="img/main_3_card_img20.webp" alt="">
+                            </div>
+                            <div class="card-text">
+                                <p>홈플러스</p>
+                                <span>
+                                    <img src="img/main_3_card_logo20.webp" alt="">
+                                </span>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div><!-- swiper.section04-Swiper -->
+
+            </section><!-- .section-04 -->
+
+            <section class="section section-05">
+                <div class="title">
+                    <h3>즐거운과 함께하는 판매처 및 기업고객</h3>
+                </div>
+
+                <div class="marquee-container">
+                    <div class="marquee marquee--forwards">
+                        <span><img src="img/glogo1.webp" alt="Logo 1"></span>
+                        <span><img src="img/glogo2.webp" alt="Logo 2"></span>
+                        <span><img src="img/glogo3.webp" alt="Logo 3"></span>
+                        <span><img src="img/glogo4.webp" alt="Logo 4"></span>
+                        <span><img src="img/glogo5.webp" alt="Logo 5"></span>
+                        <span><img src="img/glogo6.webp" alt="Logo 6"></span>
+                        <span><img src="img/glogo7.webp" alt="Logo 7"></span>
+                        <span><img src="img/glogo8.webp" alt="Logo 8"></span>
+                        <span><img src="img/glogo9.webp" alt="Logo 9"></span>
+                        <span><img src="img/glogo10.webp" alt="Logo 10"></span>
+                        <span><img src="img/glogo11.webp" alt="Logo 11"></span>
+                        <span><img src="img/glogo12.webp" alt="Logo 12"></span>
+                        <span><img src="img/glogo13.webp" alt="Logo 13"></span>
+                        <span><img src="img/glogo14.webp" alt="Logo 14"></span>
+                        <span><img src="img/glogo15.webp" alt="Logo 15"></span>
+                        <span><img src="img/glogo16.webp" alt="Logo 16"></span>
+                        <span><img src="img/glogo17.webp" alt="Logo 17"></span>
+                        <span><img src="img/glogo18.webp" alt="Logo 18"></span>
+                        <span><img src="img/glogo19.webp" alt="Logo 19"></span>
+                        <span><img src="img/glogo20.webp" alt="Logo 20"></span>
+                        <span><img src="img/glogo1.webp" alt="Logo 1"></span>
+                        <span><img src="img/glogo2.webp" alt="Logo 2"></span>
+                        <span><img src="img/glogo3.webp" alt="Logo 3"></span>
+                        <span><img src="img/glogo4.webp" alt="Logo 4"></span>
+                        <span><img src="img/glogo5.webp" alt="Logo 5"></span>
+                        <span><img src="img/glogo6.webp" alt="Logo 6"></span>
+                        <span><img src="img/glogo7.webp" alt="Logo 7"></span>
+                        <span><img src="img/glogo8.webp" alt="Logo 8"></span>
+                        <span><img src="img/glogo9.webp" alt="Logo 9"></span>
+                        <span><img src="img/glogo10.webp" alt="Logo 10"></span>
+                        <span><img src="img/glogo11.webp" alt="Logo 11"></span>
+                        <span><img src="img/glogo12.webp" alt="Logo 12"></span>
+                        <span><img src="img/glogo13.webp" alt="Logo 13"></span>
+                        <span><img src="img/glogo14.webp" alt="Logo 14"></span>
+                        <span><img src="img/glogo15.webp" alt="Logo 15"></span>
+                        <span><img src="img/glogo16.webp" alt="Logo 16"></span>
+                        <span><img src="img/glogo17.webp" alt="Logo 17"></span>
+                        <span><img src="img/glogo18.webp" alt="Logo 18"></span>
+                        <span><img src="img/glogo19.webp" alt="Logo 19"></span>
+                        <span><img src="img/glogo20.webp" alt="Logo 20"></span>
+                    </div>
+                    <div class="marquee marquee--backwards">
+                        <span><img src="img/glogo21.webp" alt="Logo 21"></span>
+                        <span><img src="img/glogo22.webp" alt="Logo 22"></span>
+                        <span><img src="img/glogo23.webp" alt="Logo 23"></span>
+                        <span><img src="img/glogo24.webp" alt="Logo 24"></span>
+                        <span><img src="img/glogo25.webp" alt="Logo 25"></span>
+                        <span><img src="img/glogo26.webp" alt="Logo 26"></span>
+                        <span><img src="img/glogo27.webp" alt="Logo 27"></span>
+                        <span><img src="img/glogo28.webp" alt="Logo 28"></span>
+                        <span><img src="img/glogo29.webp" alt="Logo 29"></span>
+                        <span><img src="img/glogo30.webp" alt="Logo 30"></span>
+                        <span><img src="img/glogo31.webp" alt="Logo 31"></span>
+                        <span><img src="img/glogo32.webp" alt="Logo 32"></span>
+                        <span><img src="img/glogo34.webp" alt="Logo 34"></span>
+                        <span><img src="img/glogo35.webp" alt="Logo 35"></span>
+                        <span><img src="img/glogo36.webp" alt="Logo 36"></span>
+                        <span><img src="img/glogo37.webp" alt="Logo 37"></span>
+                        <span><img src="img/glogo41.png" alt="Logo 38"></span>
+                        <span><img src="img/glogo39.webp" alt="Logo 39"></span>
+                        <span><img src="img/glogo40.webp" alt="Logo 40"></span>
+                        <span><img src="img/glogo21.webp" alt="Logo 21"></span>
+                        <span><img src="img/glogo22.webp" alt="Logo 22"></span>
+                        <span><img src="img/glogo23.webp" alt="Logo 23"></span>
+                        <span><img src="img/glogo24.webp" alt="Logo 24"></span>
+                        <span><img src="img/glogo25.webp" alt="Logo 25"></span>
+                        <span><img src="img/glogo26.webp" alt="Logo 26"></span>
+                        <span><img src="img/glogo27.webp" alt="Logo 27"></span>
+                        <span><img src="img/glogo28.webp" alt="Logo 28"></span>
+                        <span><img src="img/glogo29.webp" alt="Logo 29"></span>
+                        <span><img src="img/glogo30.webp" alt="Logo 30"></span>
+                        <span><img src="img/glogo31.webp" alt="Logo 31"></span>
+                        <span><img src="img/glogo32.webp" alt="Logo 32"></span>
+                        <span><img src="img/glogo42.png" alt="Logo 33"></span>
+                        <span><img src="img/glogo34.webp" alt="Logo 34"></span>
+                        <span><img src="img/glogo35.webp" alt="Logo 35"></span>
+                        <span><img src="img/glogo36.webp" alt="Logo 36"></span>
+                        <span><img src="img/glogo37.webp" alt="Logo 37"></span>
+                        <span><img src="img/glogo39.webp" alt="Logo 39"></span>
+                        <span><img src="img/glogo40.webp" alt="Logo 40"></span>
+                    </div>
+                </div>
+            </section><!-- section-05 -->
+
+
+            <section class="section section-06">
+                <div class="inner">
+                    <div class="title">
+                        <h3>즐거운 소식</h3>
+                        <a href="#">더보기+</a>
+                    </div>
+
+                    <div class="news_item-wrap">
+                        <div class="item">
+                            <a href="#">
+                                <p>㈜즐거운, 공차코리아와 모바일 상품권 서비스 제휴</p>
+                                <span>2025.01</span>
+                            </a>
+                        </div><!-- .item end -->
+
+                        <div class="item">
+                            <a href="#">
+                                <p>㈜즐거운, ‘스마일기프트 앱캐시 교환권’ 출시</p>
+                                <span>2025.01</span>
+                            </a>
+                        </div><!-- .item end -->
+
+                        <div class="item">
+                            <a href="#">
+                                <p>즐거운, 전자금융업 라이선스 취득</p>
+                                <span>2024.12</span>
+                            </a>
+                        </div><!-- .item end -->
+
+                        <div class="item">
+                            <a href="#">
+                                <p>모바일전문기업 ‘즐거운’, iN 자연드림과 모바일상품권 제휴</p>
+                                <span>2024.11</span>
+                            </a>
+                        </div><!-- .item end -->
+
+
+                    </div><!-- .news_item-wrap end -->
+                </div><!-- inner -->
+            </section><!-- .section-06  end -->
+        </main>
+
+        <footer class="footer">
+            <div class="top_btn">
+                <a href="#"><img src="img/top.svg" alt=""></a>
+            </div>
+            <div class="ft_nav">
+                <ul>
+                    <li><a href="#">회사소개서 다운로드</a></li>
+                    <li><a href="#">고개지원</a></li>
+                </ul>
+            </div><!-- .ft_nav -->
+
+            <div class="inner">
+                <div class="ft_info_wrap">
+                    <p class="ft_logo">주식회사 즐거운</p>
+                    <div class="ft_info">
+                        <ul>
+                            <li>대표자 임관웅</li>
+                            <li>사업자등록번호 104-86-33511</li>
+                            <li>서울특별시 강남구 언주로 709, 6~7층(논현동, 송암빌딩)</li>
+                        </ul>
+                        <ul>
+                            <li>대표번호 02-542-0077</li>
+                            <li>business@zlgoon.co.kr</li>
+                            <li>개인정보보호 책임자 강상순</li>
+                        </ul>
+                        <ul>
+                            <li>고객센터 1661-8191 (09:00-18:00)</li>
+                            <li><a href="#">문의하기</a></li>
+                        </ul>
+                        <ul class="ft_info_bottom">
+                            <li><a href="#"><strong>개인정보처리방침</strong></a></li>
+                            <li><a href="#"><strong>전자금융거래 이용약관</strong></a></li>
+                        </ul>
+                    </div><!-- ft_info -->
+                    <p class="copyright">COPYRIGHT © ZLGOON. ALL RIGHTS RESERVED.</p>
+                </div><!-- ft_info_wrap -->
+
+                <div class="family_site">
+                    <button type="button" class="family_site-btn">Family Site</button>
+                    <ul class="list">
+                        <li><a href="#">오피스콘</a></li>
+                        <li><a href="#">스마일기프트</a></li>
+                        <li><a href="#">일상카페</a></li>
+                        <li><a href="#">즐거운 페이먼트</a></li>
+                    </ul>
+                </div><!-- family_site -->
+            </div><!-- inner -->
+        </footer><!-- .footer end -->
+    </div><!-- #wrap end -->
+</body>
+</html>
